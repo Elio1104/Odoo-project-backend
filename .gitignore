@@ -5,7 +5,10 @@ __pycache__/
 *$py.class
 
 .idea/
+.ia\
+.ia\*
 .ia/
+.ia/*
 
 # C extensions
 *.so
