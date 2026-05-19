@@ -2,6 +2,7 @@ import secrets
 
 from sqlalchemy.orm import Session
 
+from models import Employees
 from repositories import user_repo, employee_repo
 from schemas.employee import EmployeeCreate
 
@@ -28,5 +29,5 @@ def create_employee(db: Session, data: EmployeeCreate) -> Employees :
 
     return employee
 
-def read_employee(db: Session, employee_id: int) -> Employees :
-    return employee_repo.read_employee(db, employee_id)
+def search(db, **filters):
+    return employee_repo.search_employees(db, **filters)

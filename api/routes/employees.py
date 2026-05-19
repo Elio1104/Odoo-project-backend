@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -11,6 +13,22 @@ router = APIRouter(prefix="/employees", tags=["Employees"])
 def create_employee(data: EmployeeCreate, db: Session = Depends(get_db)):
     return employee_service.create_employee(db, data)
 
-@router.get("/read/{employee_id}", response_model=EmployeeRead)
-def read_employee(employee_id: int, db: Session = Depends(get_db)):
-    return employee_service.read_employee(db, employee_id)
+@router.get("/get", response_model=list[EmployeeRead])
+def get_employee(
+        employee_id: Optional[int] = None,
+        email: Optional[str] = None,
+        department_id: Optional[int] = None,
+        role: Optional[str] = None,
+        is_active: Optional[bool] = None,
+        limit: Optional[int] = None,
+        db: Session = Depends(get_db)
+):
+    return employee_service.search(
+        db,
+        employee_id=employee_id,
+        email=email,
+        department_id=department_id,
+        role=role,
+        is_active=is_active,
+        limit=limit
+)

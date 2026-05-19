@@ -17,7 +17,7 @@ def create_user(db: Session, user_data: dict):
 
     return user
 
-def read_user(db: Session, user_id: int):
+def get_user_by_id(db: Session, user_id: int):
     stmt = select(Users).where(Users.id == user_id)
     result = db.execute(stmt).scalars().one_or_none()
 
