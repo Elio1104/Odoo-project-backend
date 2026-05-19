@@ -1,6 +1,11 @@
 from fastapi import FastAPI
+from sqlalchemy.orm import sessionmaker
+
+from core.database import engine
 
 app = FastAPI()
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 @app.get("/")
