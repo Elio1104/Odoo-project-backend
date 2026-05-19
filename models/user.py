@@ -1,9 +1,13 @@
+from typing import TYPE_CHECKING
+
 from core.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Enum
 
 from models.mixins import TimestampMixin
 
+if TYPE_CHECKING:
+    from models.employee import Employees
 
 class Role(str, Enum):
     ADMIN = 'admin'
@@ -34,4 +38,9 @@ class Users(Base, TimestampMixin):
     is_active: Mapped[bool] = mapped_column(
         nullable=False,
         default=True
+    )
+
+    employee: Mapped["Employees"] = relationship(
+        "Employees",
+        back_populates="user"
     )

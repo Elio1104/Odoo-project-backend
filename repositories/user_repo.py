@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 
-from models.employee import Employees
 from models.user import Users
 
 

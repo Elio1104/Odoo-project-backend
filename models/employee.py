@@ -2,13 +2,15 @@ from datetime import date
 from typing import TYPE_CHECKING
 
 from sqlalchemy import ForeignKey, String, Date
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from core.database import Base
 from models.mixins import TimestampMixin
 
 if TYPE_CHECKING:
-    from models.user import Users, Role
+    from models.user import Users
+    from models.department import Departments
+
 
 class Employees(Base, TimestampMixin):
     __tablename__ = 'employees'
@@ -49,4 +51,14 @@ class Employees(Base, TimestampMixin):
     is_active: Mapped[bool] = mapped_column(
         nullable=False,
         default=True
+    )
+
+    user: Mapped["Users"] = relationship(
+        "Users",
+        back_populates="employee"
+    )
+
+    department: Mapped["Departments"] = relationship(
+        "Departments",
+        back_populates="employees"
     )
