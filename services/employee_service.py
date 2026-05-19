@@ -26,4 +26,4 @@ def create_employee(db: Session, data: EmployeeCreate):
 
     print(temp_password) ##del
 
-    return employee
+    return data
