@@ -34,6 +34,11 @@ class EmployeeCreate(BaseModel):
             raise ValueError("La date d'embauche ne peut pas être dans le futur")
         return self
 
+class UserInfo(BaseModel):
+    email: str
+    role: str
+    model_config = {"from_attributes": True}
+
 class EmployeeRead(BaseModel):
     id: int
     first_name: str
@@ -41,8 +46,8 @@ class EmployeeRead(BaseModel):
     position: Optional[str]
     hire_date: date
     department_id: Optional[int]
-    email: str
-    role: str
+    is_active: bool
+    user: UserInfo
 
     model_config = {"from_attributes": True}
 

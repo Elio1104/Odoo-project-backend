@@ -11,3 +11,8 @@ Content-Type: application/json
   "hire_date" :  "2025-04-12"
 }
 
+
+####
+
+GET http://localhost:8000/employees/read/1
+Content-Type: application/json

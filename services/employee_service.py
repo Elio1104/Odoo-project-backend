@@ -6,7 +6,7 @@ from repositories import user_repo, employee_repo
 from schemas.employee import EmployeeCreate
 
 
-def create_employee(db: Session, data: EmployeeCreate):
+def create_employee(db: Session, data: EmployeeCreate) -> Employees :
     temp_password = secrets.token_urlsafe(12)
 
     user = user_repo.create_user(db, {
@@ -26,4 +26,7 @@ def create_employee(db: Session, data: EmployeeCreate):
 
     print(temp_password) ##del
 
-    return data
+    return employee
+
+def read_employee(db: Session, employee_id: int) -> Employees :
+    return employee_repo.read_employee(db, employee_id)
