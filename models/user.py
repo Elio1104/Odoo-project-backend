@@ -1,14 +1,16 @@
 from core.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Enum, DateTime, func
-from datetime import datetime
+from sqlalchemy import Enum
+
+from models.mixins import TimestampMixin
+
 
 class Role(str, Enum):
     ADMIN = 'admin'
     EMPLOYEE = 'employee'
     MANAGER = 'manager'
 
-class User(Base):
+class Users(Base, TimestampMixin):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(
@@ -32,10 +34,4 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(
         nullable=False,
         default=True
-    )
-
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        nullable=False,
-        server_default=func.now()
     )
