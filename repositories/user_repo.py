@@ -22,3 +22,9 @@ def get_user_by_id(db: Session, user_id: int):
     result = db.execute(stmt).scalars().one_or_none()
 
     return result
+
+def get_user_by_email(db: Session, email: str):
+    stmt = select(Users).where(Users.email == email)
+    result = db.execute(stmt).scalars().one_or_none()
+
+    return result

@@ -1,6 +1,7 @@
 import secrets
 
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
 
 from models import Employees
 from repositories import user_repo, employee_repo
@@ -8,6 +9,9 @@ from schemas.employee import EmployeeCreate
 
 
 def create_employee(db: Session, data: EmployeeCreate) -> Employees :
+    if user_repo.get_user_by_email(db, data.email):
+        raise HTTPException(400, "Email déjà utilisé")
+
     temp_password = secrets.token_urlsafe(12)
 
     user = user_repo.create_user(db, {

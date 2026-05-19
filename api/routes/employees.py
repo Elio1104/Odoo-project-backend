@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from core.dependencies import get_db
@@ -11,7 +11,10 @@ router = APIRouter(prefix="/employees", tags=["Employees"])
 
 @router.post("/create", response_model=EmployeeRead, status_code=201)
 def create_employee(data: EmployeeCreate, db: Session = Depends(get_db)):
-    return employee_service.create_employee(db, data)
+    try:
+        return employee_service.create_employee(db, data)
+    except HTTPException as e:
+        raise e
 
 @router.get("/get", response_model=list[EmployeeRead])
 def get_employee(

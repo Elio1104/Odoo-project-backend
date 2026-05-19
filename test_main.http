@@ -4,15 +4,14 @@ POST http://localhost:8000/employees/create
 Content-Type: application/json
 
 {
-  "email" : "alondot@gmail.com",
-  "role" : "employee",
-  "first_name" : "aaron",
-  "last_name" : "londot",
-  "hire_date" :  "2025-04-12"
+  "email" : "theo.yla@gmail.com",
+  "role" : "manager",
+  "first_name" : "theo",
+  "last_name" : "yolandia",
+  "hire_date" :  "2026-04-12"
 }
-
 
 ####
 
-GET http://localhost:8000/employees/get?employee_id=1
+GET http://localhost:8000/employees/get?limit=2
 Content-Type: application/json
