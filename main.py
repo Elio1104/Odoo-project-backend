@@ -1,18 +1,9 @@
 from fastapi import FastAPI
-from sqlalchemy.orm import sessionmaker
-
-from core.database import engine
+from api.routes import employees
+import uvicorn
 
 app = FastAPI()
+app.include_router(employees.router)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
