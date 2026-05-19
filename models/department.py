@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import String, Text, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -22,15 +22,22 @@ class Departments(Base, TimestampMixin):
         nullable=False
     )
 
-    description: Mapped[str] = mapped_column(
+    description: Mapped[Optional[str]] = mapped_column(
         Text()
     )
 
-    manager_id: Mapped[int] = mapped_column(
-        ForeignKey('employees.id'),
+    manager_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey('employees.id', use_alter=True, name='fk_department_manager'),
     )
 
-    employees: Mapped["Employees"] = relationship(
+    employees: Mapped[Optional["Employees"]] = relationship(
         "Employees",
+        foreign_keys="[Employees.department_id]",
         back_populates="department"
+    )
+
+    manager: Mapped[Optional["Employees"]] = relationship(
+        "Employees",
+        foreign_keys=[manager_id],
+        post_update=True,
     )

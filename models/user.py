@@ -1,8 +1,8 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from core.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Enum
+from enum import Enum
 
 from models.mixins import TimestampMixin
 
@@ -40,7 +40,7 @@ class Users(Base, TimestampMixin):
         default=True
     )
 
-    employee: Mapped["Employees"] = relationship(
+    employee: Mapped[Optional["Employees"]] = relationship(
         "Employees",
         back_populates="user"
     )

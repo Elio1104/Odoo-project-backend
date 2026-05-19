@@ -1,5 +1,5 @@
 fastapi~=0.136.1
 sqlalchemy
 python-dotenv
-uliweb-alembic
+alembic
 pydantic

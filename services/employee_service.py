@@ -12,7 +12,7 @@ def create_employee(db: Session, data: EmployeeCreate):
     user = user_repo.create_user(db, {
         'email': data.email,
         'hashed_password': temp_password,
-        'role': 'employee'
+        'role': data.role.value
     })
 
     employee = employee_repo.create_employee(db, {

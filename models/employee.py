@@ -1,5 +1,5 @@
 from datetime import date
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import ForeignKey, String, Date
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -35,11 +35,11 @@ class Employees(Base, TimestampMixin):
         nullable=False
     )
 
-    department_id: Mapped[int] = mapped_column(
+    department_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey('departments.id'),
     )
 
-    position: Mapped[str] = mapped_column(
+    position: Mapped[Optional[str]] = mapped_column(
         String(100)
     )
 
@@ -55,10 +55,12 @@ class Employees(Base, TimestampMixin):
 
     user: Mapped["Users"] = relationship(
         "Users",
+        foreign_keys=[user_id],
         back_populates="employee"
     )
 
     department: Mapped["Departments"] = relationship(
         "Departments",
+        foreign_keys=[department_id],
         back_populates="employees"
     )
