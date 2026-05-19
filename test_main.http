@@ -2,7 +2,12 @@
 
 POST http://localhost:8000/employees/create
 Content-Type: application/json
-body: {
-    "name": "aaron",
+
+{
+  "email" : "alondot@gmail.com",
+  "role" : "employee",
+  "first_name" : "aaron",
+  "last_name" : "londot",
+  "hire_date" :  "2025-04-12"
 }
 
