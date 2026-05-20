@@ -43,3 +43,25 @@ def search_departments(
         stmt = stmt.limit(limit)
 
     return db.execute(stmt).scalars().unique().all()
+
+def update_department(db: Session, department_id: int, department_data: dict):
+    department = get_department_by_id(db, department_id)
+
+    if department is None:
+        return None
+
+    for key, value in department_data.items():
+        setattr(department, key, value)
+
+    db.commit()
+    db.refresh(department)
+
+    return department
+
+def delete_department(db: Session, department_id: int):
+    department = get_department_by_id(db, department_id)
+    if department is None:
+        return None
+    db.delete(department)
+    db.commit()
+    return department

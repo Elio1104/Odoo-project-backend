@@ -1,0 +1,24 @@
+POST http://localhost:8000/departments/create
+Content-Type: application/json
+
+{
+  "name" : "RH",
+  "description" : "Un super job social pour gerer l'entreprise",
+  "manager_id" : 1
+}
+###
+
+GET http://localhost:8000/departments/get
+
+###
+
+DELETE http://localhost:8000/departments/delete/1
+
+###
+
+PATCH http://localhost:8000/departments/update/2
+Content-Type: application/json
+
+{
+  "description" : "JSP MDRRR"
+}

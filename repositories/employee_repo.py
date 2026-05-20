@@ -23,11 +23,13 @@ def create_employee(db: Session, employee_data: dict):
 
     return employee
 
+
 def get_employee_by_id(db: Session, employee_id: int):
     stmt = select(Employees).where(Employees.id == employee_id)
     result = db.execute(stmt).scalars().one_or_none()
 
     return result
+
 
 def search_employees(
     db: Session,
@@ -59,3 +61,23 @@ def search_employees(
 
     return db.execute(stmt).scalars().unique().all()
 
+def update_employee(db: Session, employee_id: int, employee_data: dict):
+    employee = get_employee_by_id(db, employee_id)
+
+    if employee is None:
+        return None
+
+    for key, value in employee_data.items():
+        setattr(employee, key, value)
+
+    db.commit()
+    db.refresh(employee)
+    return employee
+
+def delete_employee(db: Session, employee_id: int):
+    employee = get_employee_by_id(db, employee_id)
+    if employee is None:
+        return None
+    db.delete(employee)
+    db.commit()
+    return employee

@@ -1,8 +1,6 @@
 from fastapi import FastAPI
-from api.routes import employees
+from api.routes import employees, departments
 import uvicorn
-
-from routes import departments
 
 app = FastAPI()
 app.include_router(employees.router)

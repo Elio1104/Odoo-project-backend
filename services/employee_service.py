@@ -5,7 +5,7 @@ from fastapi import HTTPException
 
 from models import Employees
 from repositories import user_repo, employee_repo
-from schemas.employee import EmployeeCreate
+from schemas.employee import EmployeeCreate, EmployeeUpdate
 
 
 def create_employee(db: Session, data: EmployeeCreate) -> Employees :
@@ -29,9 +29,22 @@ def create_employee(db: Session, data: EmployeeCreate) -> Employees :
         'department_id': data.department_id
     })
 
-    print(temp_password) ##del
+    ##need hash
 
     return employee
 
 def search(db : Session, **filters):
     return employee_repo.search_employees(db, **filters)
+
+def update_employee(db: Session, employee_id: int, data: EmployeeUpdate):
+    payload = data.model_dump(exclude_none=True)
+    employee = employee_repo.update_employee(db, employee_id, payload)
+    if employee is None:
+        raise HTTPException(404, "Employé non trouvé")
+    return employee
+
+def delete_employee(db: Session, employee_id: int):
+    employee = employee_repo.delete_employee(db, employee_id)
+    if employee is None:
+        raise HTTPException(404, "Employé non trouvé")
+    return employee

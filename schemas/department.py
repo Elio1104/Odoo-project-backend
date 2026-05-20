@@ -15,6 +15,8 @@ class DepartmentRead(BaseModel):
     description: Optional[str]
     manager_id: Optional[int]
 
+    model_config = {"from_attributes": True}
+
 class DepartmentUpdate(BaseModel):
     name: Optional[str] = Field(None, min_length=1, max_length=100)
     description: Optional[str] = Field(None, max_length=500)

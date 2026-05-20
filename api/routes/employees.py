@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from core.dependencies import get_db
-from schemas.employee import EmployeeRead, EmployeeCreate
+from schemas.employee import EmployeeRead, EmployeeCreate, EmployeeUpdate
 from services import employee_service
 
 router = APIRouter(prefix="/employees", tags=["Employees"])
@@ -35,3 +35,11 @@ def get_employee(
         is_active=is_active,
         limit=limit
 )
+
+@router.patch("/update/{employee_id}", response_model=EmployeeRead)
+def update_employee(employee_id: int, data: EmployeeUpdate, db: Session = Depends(get_db)):
+    return employee_service.update_employee(db, employee_id, data)
+
+@router.delete("/delete/{employee_id}", response_model=EmployeeRead)
+def delete_employee(employee_id: int, db: Session = Depends(get_db)):
+    return employee_service.delete_employee(db, employee_id)
