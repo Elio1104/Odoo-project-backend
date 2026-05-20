@@ -47,4 +47,10 @@ def delete_employee(db: Session, employee_id: int):
     employee = employee_repo.delete_employee(db, employee_id)
     if employee is None:
         raise HTTPException(404, "Employé non trouvé")
+
+    user_id = employee.user_id
+
+    employee_repo.delete_employee(db, employee_id)
+    user_repo.delete_user(db, user_id)
+
     return employee

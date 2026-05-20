@@ -64,3 +64,8 @@ class Employees(Base, TimestampMixin):
         foreign_keys=[department_id],
         back_populates="employees"
     )
+
+    leave_allocations: Mapped[list["LeaveAllocations"]] = relationship(
+        "LeaveAllocations",
+        back_populates="employee"
+    )

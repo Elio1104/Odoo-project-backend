@@ -28,3 +28,11 @@ def get_user_by_email(db: Session, email: str):
     result = db.execute(stmt).scalars().one_or_none()
 
     return result
+
+def delete_user(db: Session, user_id: int):
+    user = get_user_by_id(db, user_id)
+    if user is None:
+        return None
+    db.delete(user)
+    db.commit()
+    return user
