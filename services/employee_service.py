@@ -33,5 +33,5 @@ def create_employee(db: Session, data: EmployeeCreate) -> Employees :
 
     return employee
 
-def search(db, **filters):
+def search(db : Session, **filters):
     return employee_repo.search_employees(db, **filters)
